@@ -23,11 +23,11 @@
     "url": "https://github.com/adamloving/node-stream-inheritance/issues"
   },
   "homepage": "https://github.com/adamloving/node-stream-inheritance",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "mocha": "^2.2.4",
+    "chai": "^2.3.0",
     "jscs": "^1.13.1",
-    "jshint": "^2.7.0"
+    "jshint": "^2.7.0",
+    "mocha": "^2.2.4"
   }
 }
