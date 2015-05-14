@@ -1,6 +1,7 @@
 'use strict';
 var util = require('util'); // built in node stuff
 var Writable = require('stream').Writable;
+var log = require('bunyan').createLogger({name: 'default'});
 
 // A writeable stream that can hold 26 bytes
 function AlphaStream(options) {
@@ -14,6 +15,7 @@ module.exports = AlphaStream;
 // chunk can be a buffer or a string
 // we need to call callback when we're done
 AlphaStream.prototype._write = function(chunk, encoding, callback) {
+  log.info('_write length', chunk.length);
   this.chunks.push(chunk);
 
   var error;

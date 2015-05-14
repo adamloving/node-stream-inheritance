@@ -1,6 +1,7 @@
 'use strict';
 var util = require('util'); // built in node stuff
 var Readable = require('stream').Readable;
+var log = require('bunyan').createLogger({name: 'default'});
 
 var ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -13,6 +14,7 @@ util.inherits(AlphaStream, Readable); // how node indicates inheritance
 module.exports = AlphaStream;
 
 AlphaStream.prototype._read = function(size) {
+  log.info('_read length:', size);
   try {
     this.handleRead(size);
   } catch (err) {

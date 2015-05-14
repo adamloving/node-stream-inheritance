@@ -1,10 +1,12 @@
 'use strict';
 var fs = require('fs');
-var AlphaStream = require('../src/writeable');
 var expect = require('chai').expect;
+var log = require('bunyan').createLogger({name: 'default'});
+
+var AlphaStream = require('../src/writeable');
 
 describe('My Writeable Stream', function() {
-  it('should stream the alphabet', function(done) {
+  it('should receive 26 letters', function(done) {
     var sampleFilePath = __dirname + '/samples/alphabet.txt';
     var readStream = fs.createReadStream(sampleFilePath);
 
@@ -12,9 +14,7 @@ describe('My Writeable Stream', function() {
 
     readStream.pipe(alphaStream)
     .on('full', function() {
-      console.log('got full');
-      // "This event fires when there will be no more data to read."
-      // note that this is the event emitted by the alphaStream, not the readStream
+      log.info('alphaStream full');
       var expected = 'abcdefghijklmnopqrstuvwxyz';
       var actual = alphaStream.toString();
 

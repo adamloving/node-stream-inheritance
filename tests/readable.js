@@ -1,7 +1,9 @@
 'use strict';
 var fs = require('fs');
-var AlphaStream = require('../src/readable');
 var expect = require('chai').expect;
+var log = require('bunyan').createLogger({name: 'default'});
+
+var AlphaStream = require('../src/readable');
 
 describe('My Readable Stream', function() {
   before(function() {
@@ -16,16 +18,22 @@ describe('My Readable Stream', function() {
     var tempFilePath = __dirname + '/../tmp/alphabet.txt';
     var writeStream = fs.createWriteStream(tempFilePath);
 
-    alphaStream.pipe(writeStream)
+    alphaStream
     .on('end', function() {
       // "This event fires when there will be no more data to read."
-      // (but you have to emit it yourself)
+      // (emitted for us automatically when we push(null))
+      log.info('alphaStream end');
     })
     .on('close', function() {
+      // "This event fires when there will be no more data to read."
+      // (but you have to emit it yourself, which we don't in this example)
+      log.info('alphaStream close');
+    })
+    .pipe(writeStream)
+    .on('close', function() {
+      log.info('writeStream close');
       // "Emitted when the underlying resource (for example, the backing file
       // descriptor) has been closed. Not all streams will emit this."
-      // but in this case, it is emitted automatically, when the AlphaReadable
-      // does push(null)
       var expected = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
       var actual = fs.readFileSync(tempFilePath).toString();
 
