@@ -19,7 +19,7 @@ my own 'full' event - indicating that my custom stream had no room for further
 input.
 
 1. **How do I handle errors?** `_write` and `_transform` provide callbacks. If
-you pass your error, out the underlying implementation will automatically
+you pass your error out, the underlying implementation will automatically
 emit an 'error' event. In the case of `_read`, you need to use
 `this.emit('error', err);`
 
