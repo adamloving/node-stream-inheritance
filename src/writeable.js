@@ -12,8 +12,7 @@ function AlphaStream(options) {
 util.inherits(AlphaStream, Writable); // how node indicates inheritance
 module.exports = AlphaStream;
 
-// chunk can be a buffer or a string
-// we need to call callback when we're done
+// chunk can be a buffer, string, or objects depending on options above
 AlphaStream.prototype._write = function(chunk, encoding, callback) {
   log.info('_write length', chunk.length);
   this.chunks.push(chunk);
@@ -27,17 +26,15 @@ AlphaStream.prototype._write = function(chunk, encoding, callback) {
   }
 
   if (callback) {
-    callback(error);
+    callback(error); // if handleWrite was async, we'd use process.nextTick here
   }
 };
 
 AlphaStream.prototype.handleWrite = function() {
   if (this.toString().length === 26) {
-    var self = this;
-    // not sure if should use process.nextTick here
-    // Also, unclear if we should emit 'end' or 'close', so we'll
+    // Unclear if we should emit 'end' or 'close', so we'll
     // invent our own event.
-    self.emit('full');
+    this.emit('full');
   }
 };
 

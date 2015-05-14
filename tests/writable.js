@@ -14,6 +14,7 @@ describe('My Writeable Stream', function() {
 
     readStream.pipe(alphaStream)
     .on('full', function() {
+      // 'full' is a special event defined by AlphaStream
       log.info('alphaStream full');
       var expected = 'abcdefghijklmnopqrstuvwxyz';
       var actual = alphaStream.toString();

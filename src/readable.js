@@ -10,9 +10,10 @@ function AlphaStream(options) {
   this.index = 0;
 }
 
-util.inherits(AlphaStream, Readable); // how node indicates inheritance
+util.inherits(AlphaStream, Readable); // how node implements inheritance
 module.exports = AlphaStream;
 
+// size is number of bytes reader wants
 AlphaStream.prototype._read = function(size) {
   log.info('_read length:', size);
   try {
@@ -26,15 +27,12 @@ AlphaStream.prototype._read = function(size) {
 
 // Don't want to override the inheretid "read" function, so called this
 // helper "handleRead"
-AlphaStream.prototype.handleRead = function(size) {
-  // size is number of bytes reader wants
-  // we push as much as we can, then null when done
+AlphaStream.prototype.handleRead = function() {
+  // we push as much as we can (always 1 letter), then null when done
   if (this.index < ALPHABET.length) {
-    // console.log('handleRead', size, this.index);
     this.push(ALPHABET[this.index]);
     this.index++;
   } else {
-    this.push(null); // done
-    // console.log('done');
+    this.push(null); // triggers our 'end' event
   }
 };

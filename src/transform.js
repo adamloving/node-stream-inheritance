@@ -3,7 +3,7 @@ var util = require('util'); // built in node stuff
 var Transform = require('stream').Transform;
 var log = require('bunyan').createLogger({name: 'default'});
 
-// A readable and writeable stream that can hold 26 bytes
+// A readable and writeable stream that outputs toUpperCase() of the input
 function AlphaStream(options) {
   Transform.call(this, options);
   this.chunks = [];
@@ -12,14 +12,6 @@ function AlphaStream(options) {
 
 util.inherits(AlphaStream, Transform);
 module.exports = AlphaStream;
-
-AlphaStream.prototype.toString = function() {
-  return Buffer.concat(this.chunks).toString();
-};
-
-AlphaStream.prototype.isFull = function() {
-  return this.toString().length === 26;
-};
 
 AlphaStream.prototype._transform = function(chunk, encoding, callback) {
   log.info('_transform chunk length:', chunk.length);

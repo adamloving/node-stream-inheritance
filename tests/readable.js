@@ -7,6 +7,7 @@ var AlphaStream = require('../src/readable');
 
 describe('My Readable Stream', function() {
   before(function() {
+    // make a tmp dir
     var tempPath = __dirname + '/../tmp';
     if (!fs.existsSync(tempPath)) {
       fs.mkdirSync(tempPath);
@@ -20,20 +21,19 @@ describe('My Readable Stream', function() {
 
     alphaStream
     .on('end', function() {
-      // "This event fires when there will be no more data to read."
+      // Node docs: "This event fires when there will be no more data to read."
       // (emitted for us automatically when we push(null))
       log.info('alphaStream end');
     })
     .on('close', function() {
-      // "This event fires when there will be no more data to read."
-      // (but you have to emit it yourself, which we don't in this example)
+      // Never emitted - because alphaStream doesn't have a concept of closing.
       log.info('alphaStream close');
     })
     .pipe(writeStream)
     .on('close', function() {
+      // Node docs: "Emitted when the underlying resource (for example, the
+      // backing file descriptor) has been closed. Not all streams will emit this."
       log.info('writeStream close');
-      // "Emitted when the underlying resource (for example, the backing file
-      // descriptor) has been closed. Not all streams will emit this."
       var expected = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
       var actual = fs.readFileSync(tempFilePath).toString();
 

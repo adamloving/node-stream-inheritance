@@ -7,10 +7,10 @@ var AlphaStream = require('../src/transform');
 
 describe('My Transform Stream', function() {
   it('should capitalize the alphabet', function(done) {
-    var sampleFilePath = __dirname + '/samples/alphabet.txt';
-    var readStream = fs.createReadStream(sampleFilePath);
-    var tempFilePath = __dirname + '/../tmp/alphabet.txt';
-    var writeStream = fs.createWriteStream(tempFilePath);
+    var inputFilePath = __dirname + '/samples/alphabet.txt';
+    var readStream = fs.createReadStream(inputFilePath);
+    var outputFilePath = __dirname + '/../tmp/alphabet.txt';
+    var writeStream = fs.createWriteStream(outputFilePath);
 
     var alphaStream = new AlphaStream();
 
@@ -20,7 +20,7 @@ describe('My Transform Stream', function() {
     .on('close', function() {
       log.info('Write stream closed');
       var expected = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      var actual = fs.readFileSync(tempFilePath).toString();
+      var actual = fs.readFileSync(outputFilePath).toString();
       expect(actual).to.be.equal(expected);
       done();
     });
