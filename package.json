@@ -1,0 +1,33 @@
+{
+  "name": "node-stream-inheritance",
+  "version": "0.0.1",
+  "description": "Sample code showing how to subclass node Readable, Writeable, Transform, and Duplex streams.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adamloving/node-stream-inheritance.git"
+  },
+  "keywords": [
+    "node",
+    "stream"
+  ],
+  "author": "Adam Loving",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adamloving/node-stream-inheritance/issues"
+  },
+  "homepage": "https://github.com/adamloving/node-stream-inheritance",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "mocha": "^2.2.4",
+    "jscs": "^1.13.1",
+    "jshint": "^2.7.0"
+  }
+}
