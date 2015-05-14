@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha tests"
+    "test": "node_modules/.bin/jshint src/*.js tests/*.js; ./node_modules/.bin/jscs src/*.js tests/*.js; node_modules/.bin/mocha --reporter spec tests | node_modules/.bin/bunyan --output short --level info"
   },
   "repository": {
     "type": "git",
