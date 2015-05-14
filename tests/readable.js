@@ -13,14 +13,19 @@ describe('My Readable Stream', function() {
 
   it('should stream the alphabet', function(done) {
     var alphaStream = new AlphaStream();
-    var tempFilePath = __dirname + '../tmp/alphabet.txt';
+    var tempFilePath = __dirname + '/../tmp/alphabet.txt';
     var writeStream = fs.createWriteStream(tempFilePath);
 
     alphaStream.pipe(writeStream)
     .on('end', function() {
       // "This event fires when there will be no more data to read."
-
-      // verify
+      // (but you have to emit it yourself)
+    })
+    .on('close', function() {
+      // "Emitted when the underlying resource (for example, the backing file
+      // descriptor) has been closed. Not all streams will emit this."
+      // but in this case, it is emitted automatically, when the AlphaReadable
+      // does push(null)
       var expected = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
       var actual = fs.readFileSync(tempFilePath).toString();
 

@@ -5,24 +5,21 @@ var expect = require('chai').expect;
 
 describe('My Writeable Stream', function() {
   it('should stream the alphabet', function(done) {
-    var sampleFilePath = __dirname + '../samples/alphabet.txt';
+    var sampleFilePath = __dirname + '/samples/alphabet.txt';
     var readStream = fs.createReadStream(sampleFilePath);
 
     var alphaStream = new AlphaStream();
 
     readStream.pipe(alphaStream)
-    .on('end', function() {
+    .on('full', function() {
+      console.log('got full');
       // "This event fires when there will be no more data to read."
+      // note that this is the event emitted by the alphaStream, not the readStream
       var expected = 'abcdefghijklmnopqrstuvwxyz';
       var actual = alphaStream.toString();
 
       expect(actual).to.be.equal(expected);
       done();
-    })
-    .on('close', function() {
-      // Emitted when the underlying resource (for example, the backing file
-      // descriptor) has been closed. Not all streams will emit this.
-      console.log('on close');
     });
   });
 });

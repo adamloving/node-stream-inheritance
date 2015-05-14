@@ -1,22 +1,20 @@
-# Node Boilerplate
+# Node Stream Inheritance examples
 
-An empty project with frequently used config files.
+Sample code showing how to subclass node Readable, Writeable, Transform, and Duplex streams.
 
-## Code linting and style tools
+## TODO
 
-### editorconfig
+* add npm test command for jshint
 
-The .editorconfig file in this project (when used with a plugin in your IDE)
-makes sure that whitespace is consistent.
+## Install
 
-### jshint
+    $ clone
+    $ npm install
 
-The .jshintrc file in this project defines rules for detecting
-Javascript syntax errors and untidy code (like missing semicolons, or unused
-variables). You can run jshint from the command line, or
-add an extension to your IDE to see inline errors
+## How to run tests
 
-### jscs
+    $ npm test
 
-The .jscrc file in this project defines code style rules. Use `npm test` or
-`$ ./node_modules/.bin/jscs src/*.js tests/*.js` to test them.
+## Questions
+
+1. What events should I implement (emit) to indicate my readable stream is complete?
