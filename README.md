@@ -23,8 +23,6 @@ you pass your error out, the underlying implementation will automatically
 emit an 'error' event. In the case of `_read`, you need to use
 `this.emit('error', err);`
 
-1. **TBD: how do you pipe one or multiple sub-stream into a main stream?**
-
 ## How to install this project
 
     $ git clone git@github.com:adamloving/node-stream-inheritance.git
