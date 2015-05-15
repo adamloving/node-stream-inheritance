@@ -3,7 +3,7 @@ var util = require('util'); // built in node stuff
 var Duplex = require('stream').Duplex;
 var log = require('bunyan').createLogger({name: 'default'});
 
-// A readable and writeable stream that can hold 26 bytes
+// A readable and writeable stream that can hold 26 unicode characters
 function AlphaStream(options) {
   Duplex.call(this, options);
   this.chunks = [];
