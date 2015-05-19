@@ -4,6 +4,11 @@ var Duplex = require('stream').Duplex;
 var log = require('bunyan').createLogger({name: 'default'});
 
 // A readable and writeable stream that can hold 26 unicode characters
+// This is an oversimplified example, that basically just relays the first
+// 26 letters of input. If the input stream is paused (before AlphaStream is full),
+// the write stream will never 'close'. If the input is resumed after 26 letters
+// have been streamed, AlphaStream will continue to emit 'full' - writestream
+// will have already been closed.
 function AlphaStream(options) {
   Duplex.call(this, options);
   this.chunks = [];
