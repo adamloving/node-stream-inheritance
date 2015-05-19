@@ -26,7 +26,10 @@ AlphaStream.prototype._read = function(size) {
 };
 
 // Don't want to override the inheretid "read" function, so called this
-// helper "handleRead"
+// helper "handleRead."
+// Note: size parameter ignored, this simple implementation just pushes
+// one character per read. A real implementation should push the number
+// of bytes requested, if possible.
 AlphaStream.prototype.handleRead = function() {
   // we push as much as we can (always 1 letter), then null when done
   if (this.index < ALPHABET.length) {

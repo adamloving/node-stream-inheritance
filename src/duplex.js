@@ -7,7 +7,7 @@ var log = require('bunyan').createLogger({name: 'default'});
 function AlphaStream(options) {
   Duplex.call(this, options);
   this.chunks = [];
-  this.index = 0;
+  this.index = 0; // next byte to be read
 }
 
 util.inherits(AlphaStream, Duplex);
@@ -23,12 +23,11 @@ AlphaStream.prototype.isFull = function() {
 
 AlphaStream.prototype._write = function(chunk, encoding, callback) {
   log.info('_write chunk length:', chunk.length);
-  this.chunks.push(chunk);
 
   var error;
 
   try {
-    this.handleWrite();
+    this.handleWrite(chunk);
   } catch (err) {
     error = err;
   }
@@ -39,9 +38,11 @@ AlphaStream.prototype._write = function(chunk, encoding, callback) {
 };
 
 // accept chunks until we've got the equivalent of 26 characters
-AlphaStream.prototype.handleWrite = function() {
+AlphaStream.prototype.handleWrite = function(chunk) {
   if (this.isFull()) {
     this.emit('full');
+  } else {
+    this.chunks.push(chunk);
   }
 };
 

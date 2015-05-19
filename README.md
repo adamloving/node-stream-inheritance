@@ -1,13 +1,17 @@
 # Node stream inheritance examples
 
 This project contains sample code showing how to subclass node's Readable,
-Writeable, Transform, and Duplex streams.
+Writeable, Transform, and Duplex streams as they exist in node v0.12.2.
+
+The node streaming API has a [long history](http://r.va.gg/2014/06/why-i-dont-use-nodes-core-stream-module.html). For the purposes of this project, I wanted to make my class support
+streaming in the simplest way possible without any external dependencies.
 
 ## Details
 
 I implemented this project because I couldn't find good examples of
-implementing streams. The node docs are pretty clear, but miss a couple points.
-Specifically, I wanted to know:
+implementing streams (probably because the API has changed so many times).
+The current [node stream docs](https://nodejs.org/api/stream.html) are pretty
+clear, but miss a couple points. Specifically, I wanted to know:
 
 1. **What event should I wait for to know stream is complete?** This depends on the
 stream you are piping to (the sink). In the case of a FileStream, handle the
@@ -41,4 +45,16 @@ Which is short for:
 To hide the info level log statements, use:
 
     node_modules/.bin/mocha --reporter spec tests | node_modules/.bin/bunyan --output short --level error
+
+
+## Alternatives
+
+If you do want to use a library for a simpler API (that is more consistent
+across node versions), look into [through2](https://github.com/rvagg/through2)
+and [event-stream](https://github.com/dominictarr/event-stream).
+Thanks [@collinwat](https://github.com/collinwat) for the code review
+and recommendations!
+
+
+
 
